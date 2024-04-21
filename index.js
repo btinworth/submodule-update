@@ -94,18 +94,29 @@ async function main() {
     console.log();
   }
 
-  if ((updatedMessage.length !== 0) && (core.getInput('no-commit') === '')) {
-    await gitExec(['config', 'user.name', 'github-actions']);
-    await gitExec(['config', 'user.email', 'github-actions[bot]@users.noreply.github.com']);
+  const updates = updatedMessage.length !== 0;
 
-    console.log('Committing changes');
+  if (updates) {
+    if ((core.getInput('commit') === 'true')) {
+      await gitExec(['config', 'user.name', 'github-actions']);
+      await gitExec(['config', 'user.email', 'github-actions[bot]@users.noreply.github.com']);
 
-    const message = `Update submodules:\n${updatedMessage.join('\n')}`;
+      console.log('Committing changes');
 
-    await gitExec(['commit', '-m', message]);
+      const message = `Update submodules\n${updatedMessage.join('\n')}`;
+      await gitExec(['commit', '-m', message]);
+
+      if (core.getInput('push') === 'true') {
+        const branch = core.getInput('branch');
+        await gitExec(['branch', branch]);
+
+        console.log('Pushing changes');
+        await gitExec(['push', 'origin', branch]);
+      }
+    }
   }
 
-  core.setOutput('updated', (updatedMessage.length !== 0).toString());
+  core.setOutput('updated', updates.toString());
 }
 
 main();
