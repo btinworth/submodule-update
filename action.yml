@@ -19,6 +19,10 @@ inputs:
     description: Branch name to use when pushing the updated submodules
     required: false
     default: 'submodule-update'
+  path:
+    description: Path to the root of the repository
+    required: false
+    default: '.'
 
 outputs:
   updated:

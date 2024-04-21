@@ -2,8 +2,13 @@
 
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const path = require('path');
 
 async function main() {
+  function getPath() {
+    return path.join(core.getInput('path'));
+  }
+
   async function gitExec(cmd, extraOptions) {
     let output = '';
 
@@ -14,11 +19,12 @@ async function main() {
         stdout: (data) => {
           output += data.toString();
         }
-      }
+      },
+      cwd: getPath(),
     };
 
     if (extraOptions && Object.hasOwn(extraOptions, 'cwd')) {
-      options.cwd = extraOptions.cwd;
+      options.cwd = path.join(options.cwd, extraOptions.cwd);
     }
 
     const returnCode = await exec.exec('git', cmd, options);
