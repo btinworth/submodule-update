@@ -1,0 +1,13 @@
+name: Submodule Update
+description: Batch submodule updater
+
+inputs:
+  submodules:
+    description: |
+      List of submodules to update along with a ref to update token
+      Each submodule should be listed on a separate line in the format 'path/to/submodule:ref'
+    required: true
+
+runs:
+  using: node16
+  main: index.js
