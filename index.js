@@ -3,6 +3,7 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
 const path = require('path');
+const github = require('@actions/github');
 
 async function main() {
   function getPath() {
