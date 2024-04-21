@@ -1,5 +1,5 @@
 name: Submodule Update
-description: Batch submodule updater
+description: Action for performing multiple submodule updates
 
 inputs:
   submodules:
@@ -7,6 +7,14 @@ inputs:
       List of submodules to update along with a ref to update token
       Each submodule should be listed on a separate line in the format 'path/to/submodule:ref'
     required: true
+  no-commit:
+    description: Whether to skip committing the updated submodules (anything other than '' will skip committing)
+    required: false
+    default: ''
+
+outputs:
+  updated:
+    description: Whether any submodules were updated, either 'true' or 'false'
 
 runs:
   using: node16

@@ -94,7 +94,7 @@ async function main() {
     console.log();
   }
 
-  if (updatedMessage.length !== 0) {
+  if ((updatedMessage.length !== 0) && (core.getInput('no-commit') === '')) {
     await gitExec(['config', 'user.name', 'github-actions']);
     await gitExec(['config', 'user.email', 'github-actions[bot]@users.noreply.github.com']);
 
@@ -104,6 +104,8 @@ async function main() {
 
     await gitExec(['commit', '-m', message]);
   }
+
+  core.setOutput('updated', (updatedMessage.length !== 0).toString());
 }
 
 main();
