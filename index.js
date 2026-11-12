@@ -1,9 +1,8 @@
 // This script is used to update submodules in a GitHub repository.
 
-const core = require('@actions/core');
-const exec = require('@actions/exec');
-const path = require('path');
-const github = require('@actions/github');
+import * as core from '@actions/core';
+import * as exec from '@actions/exec';
+import * as path from 'path';
 
 async function main() {
   function getPath() {
