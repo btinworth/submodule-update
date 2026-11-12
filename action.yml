@@ -29,5 +29,5 @@ outputs:
     description: Whether any submodules were updated, either 'true' or 'false'
 
 runs:
-  using: node16
-  main: index.js
+  using: node24
+  main: dist/index.js
